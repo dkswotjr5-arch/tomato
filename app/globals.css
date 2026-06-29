@@ -1,0 +1,326 @@
+/* ============================================================
+   토마토광장 - 전역 스타일
+   ============================================================ */
+* { margin:0;padding:0;box-sizing:border-box }
+html,body { width:100%;height:100%;overflow:hidden;font-family:'Segoe UI','Malgun Gothic',sans-serif;background:#1a1a2e;color:#fff;user-select:none;-webkit-user-select:none }
+.screen { display:none;position:fixed;inset:0;z-index:1 }
+.screen.active { display:flex;flex-direction:column }
+.hide { display:none!important }
+
+/* ============ 로그인 / 캐릭터 생성 / 공통 ============ */
+.login-box,.char-box,.sub-box,.modal-box,.bath-container { position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(255,255,255,.97);color:#222;border-radius:18px;padding:32px 36px;box-shadow:0 20px 60px rgba(0,0,0,.5);text-align:center;min-width:320px;max-width:95vw;max-height:90vh;overflow-y:auto }
+.sub-box { min-width:400px;max-width:800px }
+.login-box { min-width:380px }
+.login-box h1 { font-size:2.4em;color:#e74c3c;margin-bottom:4px }
+.login-box .sub { color:#666;margin-bottom:18px;font-size:1.05em }
+.btn-glogin { display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:13px;border:none;border-radius:10px;background:#fff;border:2px solid #ddd;font-size:1.05em;cursor:pointer;color:#444;transition:.2s }
+.btn-glogin:hover { border-color:#4285f4;box-shadow:0 4px 12px rgba(0,0,0,.1) }
+.btn-glogin span { background:#4285f4;color:#fff;width:24px;height:24px;border-radius:50%;font-weight:bold;line-height:24px }
+.hint { font-size:.78em;color:#aaa;margin-top:14px }
+
+.char-box { max-width:400px }
+#char-preview { border:2px solid #eee;border-radius:10px;margin:8px auto;display:block;background:#fafafa }
+.opts { max-width:320px;margin:0 auto }
+.opts input { width:100%;padding:10px;border:2px solid #ddd;border-radius:8px;font-size:1em;margin-bottom:10px }
+.row { display:flex;align-items:center;gap:8px;margin:6px 0 }
+.row>span { min-width:48px;font-weight:bold;color:#555;font-size:.9em }
+.pick { display:flex;gap:5px;flex-wrap:wrap }
+.pick button { width:42px;height:42px;border:2px solid #ddd;border-radius:8px;background:#fff;font-size:1.3em;cursor:pointer;transition:.15s }
+.pick button:hover { border-color:#667eea;transform:scale(1.1) }
+.pick button.on { border-color:#667eea;background:#eef }
+
+.btn-cancel,.btn-main { padding:11px 24px;border:none;border-radius:8px;font-size:1em;cursor:pointer;font-weight:bold;transition:.2s;margin-top:8px }
+.btn-cancel { background:#eee;color:#666 }
+.btn-cancel:hover { background:#ddd }
+.btn-main { background:linear-gradient(135deg,#667eea,#764ba2);color:#fff }
+.btn-main:hover { transform:translateY(-2px);box-shadow:0 4px 12px rgba(102,126,234,.4) }
+
+/* ============ 마을 화면 (game-screen) ============ */
+#game-screen { background:#2d5a1e }
+#hud { position:absolute;top:0;left:0;right:0;height:48px;background:rgba(0,0,0,.75);display:flex;justify-content:space-between;align-items:center;padding:0 16px;font-size:.92em;color:#fff;z-index:10;backdrop-filter:blur(6px) }
+.hud-name { font-weight:bold;color:#fff }
+.hud-right { display:flex;align-items:center;gap:8px }
+.res { background:rgba(255,255,255,.15);padding:4px 10px;border-radius:12px;display:flex;align-items:center;gap:4px;font-size:.95em }
+.res b { font-weight:bold }
+.hud-ad-btn { background:#f39c12;color:#fff;border:none;border-radius:10px;padding:6px 14px;font-weight:bold;cursor:pointer;font-size:.9em;transition:.2s }
+.hud-ad-btn:hover { background:#e67e22 }
+#game-canvas { position:absolute;top:48px;left:0;right:0;bottom:0;display:block;cursor:crosshair }
+#dialog { position:absolute;bottom:120px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.95);color:#333;padding:10px 20px;border-radius:12px;font-size:.95em;z-index:20;box-shadow:0 4px 16px rgba(0,0,0,.3);white-space:nowrap;max-width:90vw;border:2px solid #ffd54f }
+
+/* ============ 재판소 화면 (court-screen) — flex 3단 ============ */
+#court-screen { flex-direction:row }
+
+/* 좌측 패널 (사연 + 상태) */
+.court-left-panel {
+  flex-shrink:0;
+  width:280px;
+  background:#fffde7;
+  color:#222;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  padding:14px 16px;
+  border-right:4px solid #ff9800;
+  box-shadow:2px 0 12px rgba(0,0,0,.1);
+  overflow-y:auto;
+}
+.court-main {
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
+.court-story-box {
+  flex:1;
+  background:#fff;
+  border:2px solid #ffb300;
+  border-radius:12px;
+  padding:12px 16px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  min-width:0;
+  width:100%;
+}
+.story-label {
+  font-size:.85em;font-weight:900;color:#fff;
+  background:linear-gradient(135deg,#ff9800,#f57c00);
+  padding:3px 10px;border-radius:6px;
+  align-self:flex-start;
+  letter-spacing:1px;
+}
+.story-text {
+  font-size:1.05em;color:#1a1a1a;line-height:1.6;
+  font-weight:600;min-width:0;
+  word-break:break-word;
+}
+.court-status-box {
+  display:flex;flex-direction:column;gap:8px;
+  align-items:flex-end;justify-content:center;
+  min-width:160px;flex-shrink:0;
+}
+.ct-phase {
+  font-size:.9em;color:#5c6bc0;font-weight:bold;
+  background:#e8eaf6;padding:5px 12px;border-radius:8px;
+  border:1px solid #c5cae9;
+}
+.ct-timer-box { text-align:center;color:#555;font-size:.8em }
+.ct-timer-box b { color:#e74c3c;font-size:1.6em;display:block;margin-top:2px }
+.btn-exit {
+  background:#78909c;color:#fff;border:none;border-radius:8px;
+  padding:8px 16px;font-weight:bold;cursor:pointer;font-size:.9em;transition:.2s;
+}
+.btn-exit:hover { background:#546e7a }
+
+/* 중간 영역: 재판소 canvas */
+.court-canvas-wrap {
+  flex:1;
+  position:relative;
+  background:linear-gradient(180deg,#2c2c3a 0%,#1e1e2e 100%);
+  overflow:hidden;
+}
+#court-canvas {
+  position:absolute;inset:0;width:100%;height:100%;
+  display:block;
+}
+
+/* 하단 패널 (입력창 + 투표 + 판결) */
+.court-bottom-panel {
+  flex-shrink:0;
+  background:rgba(245,245,250,.98);
+  color:#222;
+  padding:10px 16px 14px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  box-shadow:0 -4px 12px rgba(0,0,0,.15);
+  border-top:3px solid #ddd;
+  max-height:240px;
+}
+
+/* 입력창 */
+.ct-input-box {
+  display: flex;
+  gap: 8px;
+}
+#ct-inp {
+  flex: 1;
+  padding: 10px 14px;
+  border: 2px solid #333;
+  border-radius: 8px;
+  font-size: 14px;
+  background: rgba(255,255,255,0.95);
+}
+#ct-inp:focus {
+  outline: none;
+  border-color: #667eea;
+  background: white;
+}
+#ct-send {
+  padding: 10px 24px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+#ct-send:hover {
+  background: #5568d3;
+  transform: translateY(-1px);
+}
+
+.ct-vote,.ct-verdict { background:#ede7f6;padding:10px 14px;border-radius:10px;border:1px solid #d1c4e9 }
+.ct-vote h3 { margin-bottom:8px;color:#5c6bc0;font-size:1em }
+.vote-btns { display:flex;gap:12px;justify-content:center }
+.g-btn,.ng-btn { flex:1;max-width:160px;padding:12px 20px;border:none;border-radius:10px;font-size:1.05em;font-weight:bold;cursor:pointer;transition:.2s;box-shadow:0 3px 8px rgba(0,0,0,.15) }
+.g-btn { background:linear-gradient(135deg,#e74c3c,#c62828);color:#fff }
+.g-btn:hover { background:linear-gradient(135deg,#c62828,#b71c1c) }
+.ng-btn { background:linear-gradient(135deg,#43a047,#2e7d32);color:#fff }
+.ng-btn:hover { background:linear-gradient(135deg,#2e7d32,#1b5e20) }
+#vote-msg { margin-top:8px;color:#666;font-size:.9em;text-align:center }
+.vr { font-size:2em;font-weight:bold;margin:6px 0;text-align:center }
+.vr.g { color:#c62828 }
+.vr.ng { color:#2e7d32 }
+#vr-stats { display:flex;justify-content:center;gap:28px;margin:8px 0 }
+.vs label { display:block;color:#888;font-size:.8em }
+.vs b { font-size:1.3em;color:#333 }
+.throw-row { display:flex;justify-content:center;gap:12px;margin-top:8px }
+.throw-row button { padding:9px 20px;border:none;border-radius:8px;font-size:.95em;font-weight:bold;cursor:pointer;transition:.2s }
+.throw-row button:first-child { background:#ffe082;color:#333 }
+.throw-row button:first-child:hover { background:#ffd54f }
+.throw-row button:last-child { background:#ef5350;color:#fff }
+.throw-row button:last-child:hover { background:#e53935 }
+
+/* ============ 정화소 ============ */
+.bath-container { min-width:340px;max-width:420px }
+#bath-canvas { border-radius:12px;border:3px solid #b2ebf2;margin:12px auto;display:block;background:#e0f7fa }
+
+/* ============ 상점 ============ */
+.shop-info { color:#5c6bc0;font-size:1.15em;margin:8px 0 16px;font-weight:bold }
+#shop-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;margin:0 0 16px;max-height:55vh;overflow-y:auto;padding:4px }
+#bath-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;margin:0 0 16px;max-height:40vh;overflow-y:auto;padding:4px }
+.si { background:#f5f5f5;border-radius:12px;padding:14px 6px;text-align:center;cursor:pointer;transition:.2s;border:3px solid transparent }
+.si:hover { transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,.12);border-color:#667eea }
+.si.equipped { border-color:#e74c3c;background:#ffe8e8 }
+.si .ic { font-size:2.2em }
+.si .nm { font-weight:bold;color:#333;font-size:.85em;margin:4px 0 }
+.si .pr { color:#5c6bc0;font-weight:bold;font-size:.85em }
+.si .ow { color:#2e7d32;font-weight:bold;font-size:.8em }
+.si .eq { color:#e74c3c;font-weight:bold;font-size:.8em }
+
+/* ============ 광고 ============ */
+.ad-stage { background:linear-gradient(135deg,#ede7f6,#e8eaf6);border-radius:14px;padding:28px;margin:0 0 14px;border:2px solid #d1c4e9 }
+.ad-title { font-size:1.3em;color:#333;margin-bottom:18px;font-weight:bold }
+.ad-bar { background:#eee;border-radius:8px;height:18px;overflow:hidden;margin-bottom:12px;border:2px solid #ddd }
+.ad-fill { background:linear-gradient(90deg,#667eea,#764ba2);height:100%;width:0%;transition:width .1s linear }
+.ad-remain { color:#666;font-size:1.1em }
+.ad-remain b { color:#e74c3c;font-size:1.5em }
+
+/* ============ 모바일 컨트롤 ============ */
+#mobile-ctrl { display:none;position:absolute;bottom:12px;left:0;right:0;padding:0 14px;z-index:10;pointer-events:none }
+@media(max-width:800px) { #mobile-ctrl { display:flex;justify-content:space-between;align-items:flex-end } }
+.m-dpad { display:grid;grid-template-columns:repeat(3,54px);grid-template-rows:repeat(3,54px);gap:4px;pointer-events:auto }
+.m-btn { border:none;border-radius:14px;background:rgba(255,255,255,.85);font-weight:bold;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;box-shadow:0 3px 8px rgba(0,0,0,.2) }
+.m-btn:active { background:#fff;transform:scale(.93) }
+.ma { padding:18px 28px;font-size:1.05em }
+.me { display:block }
+.m-act-col { display:flex;flex-direction:column;gap:8px;pointer-events:auto }
+
+/* ============ 토스트 알림 ============ */
+#toast { position:absolute;top:60px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.85);color:#fff;padding:10px 24px;border-radius:12px;font-size:.95em;z-index:9999;pointer-events:none;opacity:0;transition:opacity .3s;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.4) }
+#toast.show { opacity:1 }
+
+/* ============ 반응형 ============ */
+@media(max-width:600px) {
+  .sub-box,.bath-container { padding:20px;min-width:280px }
+  .vote-btns { flex-direction:column;align-items:center }
+  .g-btn,.ng-btn { width:90% }
+  #shop-grid { grid-template-columns:repeat(2,1fr) }
+  .court-top-panel { flex-direction:column;gap:10px;min-height:auto }
+  .court-status-box { flex-direction:row;align-items:center;min-width:auto }
+  .ct-timer-box { text-align:left }
+  .ct-timer-box b { display:inline;font-size:1.3em;margin-left:6px }
+}
+
+/* ============ 사연 등록 버튼 ============ */
+.story-actions { display:flex; gap:8px; margin-top:6px; }
+.btn-register {
+  padding: 8px 16px;
+  border: 2px solid #f39c12;
+  border-radius: 8px;
+  background: #fff3e0;
+  color: #e65100;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: 0.2s;
+}
+.btn-register:hover { background: #ffe0b2; transform: translateY(-1px); }
+.btn-register:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ============ 사연 접수 목록 ============ */
+.story-list {
+  margin-top:8px;
+  max-height:200px;
+  overflow-y:auto;
+  background:#f5f5f5;
+  border-radius:8px;
+  padding:8px;
+  border:1px solid #ddd;
+}
+.story-list-item {
+  background:#fff;
+  border-radius:6px;
+  padding:8px 10px;
+  margin-bottom:6px;
+  border-left:3px solid #f39c12;
+  font-size:0.85em;
+}
+.story-list-item .sli-text { color:#333; font-weight:600; margin-bottom:4px; }
+.story-list-item .sli-time { color:#666; font-size:0.85em; }
+.story-list-item .sli-time b { color:#e65100; }
+
+/* ============ 마을/정화소 채팅 입력창 ============ */
+.town-chat-box {
+  position:absolute;
+  bottom:12px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:6px;
+  z-index:20;
+  background:rgba(0,0,0,.7);
+  padding:8px 12px;
+  border-radius:12px;
+  backdrop-filter:blur(6px);
+}
+.town-chat-box input {
+  width:240px;
+  padding:8px 12px;
+  border:none;
+  border-radius:8px;
+  background:rgba(255,255,255,.9);
+  color:#333;
+  font-size:.95em;
+  outline:none;
+}
+.town-chat-box input:focus {
+  background:#fff;
+  box-shadow:0 0 0 2px #ffd54f;
+}
+.town-chat-box button {
+  padding:8px 16px;
+  border:none;
+  border-radius:8px;
+  background:linear-gradient(135deg,#667eea,#764ba2);
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:.9em;
+}
+.town-chat-box button:hover {
+  transform:translateY(-1px);
+  box-shadow:0 2px 8px rgba(102,126,234,.4);
+}
